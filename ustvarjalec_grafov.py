@@ -38,7 +38,7 @@ def make_graph(filename, tittle = None, x_label = None, y_label = None, fit = No
                 x_values.append(int(float(row[0])))
                 y_values.append(int(float(row[1]))) 
 
-    if filename.endswith((".xlsx")):
+    if filename.endswith((".xlsx")) or filename.endswith((".XLSX")):
         df = pd.read_excel(filename, header = None)
         x_values = df[0].tolist()
         y_values = df[1].tolist()
@@ -76,10 +76,12 @@ def make_graph(filename, tittle = None, x_label = None, y_label = None, fit = No
     ax.legend()
     plt.savefig(os.path.splitext(os.path.join(os.getcwd(),'..', "graphs_made", os.path.basename(filename)))[0])
 
-plt.show
+
 
 """
 print(param)
 print(cov)
 print(np.sqrt(np.diag(cov)))
 """
+
+      

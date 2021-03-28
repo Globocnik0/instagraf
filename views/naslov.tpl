@@ -2,8 +2,8 @@
     <head>
         <title>Instagraf</title>
         
-        <link rel="shortcut icon" href="..\database\logo.ico" type="image/x-icon">
-
+        <link rel="shortcut icon" href="{{ get_url('database', filename = 'logo.ico') }}" type="image/x-icon">
+        
     </head>
     <body>
         <h1>{{!base}}</h1>

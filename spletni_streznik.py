@@ -1,6 +1,7 @@
 import bottle
 import os
 from ustvarjalec_grafov import *
+from login_manager import *
 
 app = bottle.default_app()
 bottle.BaseTemplate.defaults['get_url'] = app.get_url
@@ -13,6 +14,18 @@ def serve_static(filename):
 def serve_static(filename):
     return bottle.static_file(filename, root= os.path.join(os.getcwd(),'..', "graphs_made"))
 
+
+@bottle.get('/en/login/')
+def login_get():
+    return bottle.template('login.tpl')
+
+@bottle.post('/en/login/')
+def login_post():
+    username = bottle.request.forms['username']
+    password = bottle.request.forms['password']
+    # cookies = bottle.request.GET.get("first_login")
+    # print(cookies)
+    return bottle.template('login.tpl')
 
 @bottle.get('/')
 def redirect():
