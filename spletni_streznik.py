@@ -23,8 +23,16 @@ def login_get():
 def login_post():
     username = bottle.request.forms['username']
     password = bottle.request.forms['password']
-    # cookies = bottle.request.GET.get("first_login")
-    # print(cookies)
+    # first_time_user = bottle.request.get("first_login")
+    # v = bottle.request.post("vehicle1")
+    # print(first_time_user)
+    # print(password)
+    # print(v)
+    first_time_user = 1
+    if first_time_user: #tukaj naprej bom nastavil piškotke
+        add_account(username = username, password = password)
+    else:
+        correct_password(username = username, password = password)
     return bottle.template('login.tpl')
 
 @bottle.get('/')

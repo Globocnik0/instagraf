@@ -8,11 +8,6 @@ import os
 
 
 
-
-def polynomial_fit(x, degree, *args): #treba dokončat
-    #for i in range(str(degree)):
-    return a*x + b 
-
 def exponential_fit(x,a,b,c):
     return a * np.exp(-b*x) + c
 
@@ -52,9 +47,17 @@ def make_graph(filename, tittle = None, x_label = None, y_label = None, fit = No
 
     x = np.linspace(np.amin(x_values), np.amax(x_values), 500)
 
-    if fit == 'linear': #še ni delujoč
-        param, cov = curve_fit(linear_fit, x_values, y_values)
-        ax.plot(x, linear_fit(x, param[0], param[1]) , label=r"$linear fit$", color="green", linewidth="1")
+    if fit == 'linear':
+        param = np.polyfit(x_values, y_values, 1)
+        ax.plot(x, np.poly1d(param)(x), label=r"$linear fit$", color="green", linewidth="1")
+
+    if fit == 'quadratic':
+        param = np.polyfit(x_values, y_values, 2)
+        ax.plot(x, np.poly1d(param)(x), label=r"$quadratic fit$", color="green", linewidth="1")
+
+    if fit == 'cubic':
+        param = np.polyfit(x_values, y_values, 3)
+        ax.plot(x, np.poly1d(param)(x), label=r"$cubic fit$", color="green", linewidth="1")
 
     if fit == 'exponential':
         param, cov = curve_fit(exponential_fit, x_values, y_values) 

@@ -15,10 +15,7 @@
         </h2>
         
     % ime = graph_filename
-
-        <img src="{{ get_url('graphs_made', filename = 'naloga04_abs_gama.png') }}" alt="Graph"/>
         <img src="{{ get_url('graphs_made', filename = ime ) }}" alt="Graph"/>
-        <img src="..\graphs_made\{{!graph_filename}}" alt="Graph"/>
 
     </body>
 </html>
