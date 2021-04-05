@@ -1,6 +1,7 @@
 import bottle
 import os
 from graph_maker import *
+from graph_maker_class import *
 from login_manager import *
 
 app = bottle.default_app()
@@ -25,7 +26,7 @@ def serve_static(filename):
 def login_get():
     if bottle.request.get_cookie('Logged'):
         return "You are logged in" #naredi spletno stran ali message
-    return bottle.template('login.tpl')
+    return bottle.template('login.tpl', alert = '')
 
 @bottle.post('/en/login/')
 def login_post():
@@ -33,14 +34,20 @@ def login_post():
     password = bottle.request.forms['password']
     first_time_user = bottle.request.forms.first_login
     if first_time_user == 'on':
-        add_account(username = username, password = password)
+        if User(username, password).valid_characters():
+            if User(username, password).username_exists():
+                return bottle.template('login.tpl', alert = 'This username is already taken. Please choose another one')#mogoče bi mogel redirectat na .get/en/login/
+            else:
+                User(username, password).add_account()
+        else:
+            return bottle.template('login.tpl', alert = 'Only permitted characters are A-Z, a-z, 0-9.')
     else:
-        if correct_password(username = username, password = password):
+        if User(username, password).correct_password():
             bottle.response.set_cookie('Logged', username, path='/en/')
             bottle.redirect('/en/')
         else:
-            return 'wrong password' #naredi .tpl stran ali message
-    return bottle.template('login.tpl')
+            return bottle.template('login.tpl', alert = 'wrong password or not registered')
+    return bottle.template('login.tpl', alert ='')
 
 @bottle.get('/')
 def redirect():
@@ -53,8 +60,10 @@ def zacetek_sl():
 @bottle.get('/en/')
 def zacetek_en():
     if bottle.request.get_cookie('Logged'):
-        user = bottle.request.get_cookie('Logged')
-        return bottle.template('naslov.tpl', base='Welcome %s to the page where the making of graphs begins.' % user)
+        if User(bottle.request.get_cookie('Logged')).username_exists():
+            return bottle.template('naslov.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = '')
+        else:
+            return bottle.template('login.tpl', alert = 'Nice try. Police is heading your way!')
     else:
         bottle.redirect('/en/login/')
 
@@ -83,8 +92,8 @@ def upload_file():
             Data = data.file.read()
             file.write(Data)
 
-    bottle.redirect('/en/graph/')
-    return "You missed a field or uploaded an unsupported file type"
+        bottle.redirect('/en/graph/')
+    return bottle.template('naslov.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = 'You missed a field or uploaded an unsupported file type')
 
 
 @bottle.get('/en/graph/') #problem če imajo datoteke isto ime
@@ -92,6 +101,11 @@ def show_graphs():
     username = bottle.request.get_cookie('Logged')
     graphs = read_graphs_from_account(username = bottle.request.get_cookie('Logged'))
     for graph in graphs:
+        # graph_class = uploaded_data(username = username, filepath = os.path.join(os.getcwd(),'..', "uploaded_files", graph['filename']), title = graph['title'], x_label = graph['x_label'], y_label = graph['y_label'], fit = graph['fit'])
+        # graph_class.read_file()
+        # graph_class.make_fit() #napaka: prevečkrat fitta
+        # graph_class.make_and_save_graph()
+        
         make_graph(username = username,filename = os.path.join(os.getcwd(),'..', "uploaded_files", graph['filename']), tittle = graph['title'], x_label = graph['x_label'], y_label = graph['y_label'], fit = graph['fit'])
 
     return bottle.template('stran_z_grafom.tpl', 

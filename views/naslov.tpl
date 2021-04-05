@@ -16,6 +16,7 @@
     </head>
     <body>
         <div class="container">
+        <h3 style="color:rgb(255, 38, 0);">{{!alert}} </h3>
         <h1>{{!base}}</h1><br>
 
         <div>

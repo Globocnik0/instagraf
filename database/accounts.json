@@ -1,17 +1,3 @@
 {
-  "people": [
-    {
-      "username": "Ales",
-      "password": "alesovgesu",
-      "graphs": [
-        {
-          "filename": "naloga04_abs_gama.txt",
-          "title": "neki",
-          "x_label": "x",
-          "y_label": "y",
-          "fit": "linear"
-        }
-      ]
-    }
-  ]
+  "people": []
 }

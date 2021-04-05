@@ -1,28 +1,45 @@
 import os
 import json
-#naredi class iz tega
-#user exists za cookie
-#username taken
+import re
 
+class User:
 
-def add_account(username, password): #treba dodati pogoje za dobro geslo in username
-    with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r+") as file:
-        accounts = json.load(file)
-        new_account = {"username": username, "password" : password, "graphs" : []}
-        accounts['people'].append(new_account) 
-        file.seek(0)
-        json.dump(accounts, file, indent = 2)
+    def __init__(self, username, password = None):
+        self.username = username
+        self.password = password
 
-def correct_password(username, password):
-    with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r") as file:
-        logins = json.load(file)
-    for login in logins['people']:
-        if login['username'] == username and login['password'] == password:
+    def add_account(self): #treba dodati pogoje za dobro geslo in username
+        with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r+") as file:
+            accounts = json.load(file)
+            new_account = {"username": self.username, "password" : self.password, "graphs" : []}
+            accounts['people'].append(new_account) 
+            file.seek(0)
+            json.dump(accounts, file, indent = 2)
+
+    def correct_password(self):
+        with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r") as file:
+            logins = json.load(file)
+        for login in logins['people']:
+            if login['username'] == self.username and login['password'] == self.password:
+                return True
+        return False
+
+    def username_exists(self):
+        with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r") as file:
+            logins = json.load(file)
+        for login in logins['people']:
+            if login['username'] == self.username:
+                return True
+        return False
+
+    def valid_characters(self):
+        if re.match("^[A-Za-z0-9]*$", self.username) or re.match("^[A-Za-z0-9]*$", self.password):
             return True
-    return False
+        return False 
+    
 
 
-
+#dealing with graphs and .json
 def add_graph_to_account(username, filename, title, x_label, y_label, fit):
     with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r+") as file:
         accounts = json.load(file)
