@@ -14,7 +14,7 @@ def exponential_fit(x,a,b,c):
 def logarithmic_fit(x,a,b,c):
     return a * np.log(b*x) + c
 
-def make_graph(filename, tittle = None, x_label = None, y_label = None, fit = None):
+def make_graph(username, filename, tittle = None, x_label = 'x axis', y_label = None, fit = None):
 
     x_values = []
     y_values = []
@@ -77,7 +77,11 @@ def make_graph(filename, tittle = None, x_label = None, y_label = None, fit = No
                         scilimits=(0, 0))  # sci notation za osi
     ax.grid(linewidth=0.5)
     ax.legend()
-    plt.savefig(os.path.splitext(os.path.join(os.getcwd(),'..', "graphs_made", os.path.basename(filename)))[0])
+
+    if not os.path.exists(os.path.join(os.getcwd(),'..', "graphs_made", username)):
+        os.makedirs(os.path.join(os.getcwd(),'..', "graphs_made", username))
+
+    plt.savefig(os.path.splitext(os.path.join(os.getcwd(),'..', "graphs_made", username , os.path.basename(filename)))[0])
 
 
 
@@ -86,5 +90,8 @@ print(param)
 print(cov)
 print(np.sqrt(np.diag(cov)))
 """
+#shranit graf
+#imet shranjeno samo .txt
+
 
       

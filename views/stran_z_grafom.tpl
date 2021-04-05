@@ -11,11 +11,17 @@
         <h1>{{!base}}</h1>
 
         <h2>
-        Here is your graph!
+        Here are your graphs!
         </h2>
-        
-    % ime = graph_filename
-        <img src="{{ get_url('graphs_made', filename = ime ) }}" alt="Graph"/>
+
+    %
+    %   
+    %for graph in graphs:
+    %path = str(username) + '/' + graph['filename'].split('.', 1)[0] + '.png'
+    %relative_path = '../graphs_made/' + path
+    %print(relative_path)
+    <img src="relative_path" alt="Graph"/>   
+    %end
 
     </body>
 </html>

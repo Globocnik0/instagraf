@@ -18,7 +18,7 @@
                 <input type="text" placeholder="Enter Username" name="username" required>  
                 <label>Password : </label>   
                 <input type="password" placeholder="Enter Password" name="password" required>  
-                <input type="checkbox" name="first_login" id="first_login"> I don't have an account/register me !!!!!!!!!!!!!
+                <input type="checkbox" name="first_login" id="first_login"> I don't have an account/register me!
                 <button type="submit">Login</button>   
 
         </form>  

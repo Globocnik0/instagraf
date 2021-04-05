@@ -7,14 +7,22 @@
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
         <title>Instagraf</title>
-        
+
+        <link rel="shortcut icon" href="..\database\logo.ico" type="image/x-icon">
         <link rel="shortcut icon" href="{{ get_url('database', filename = 'logo.ico') }}" type="image/x-icon">
+
+
 
     </head>
     <body>
         <div class="container">
-        <h1>{{!base}}</h1><br><br>
+        <h1>{{!base}}</h1><br>
 
+        <div>
+        <form action="/en/" method="post">
+        <input type="submit" value='Log out' class="btn btn-success"/>
+        </form> <br><br>
+        </div>
         
         <h2>
         <form action="/en/upload/" method="post" enctype="multipart/form-data">
