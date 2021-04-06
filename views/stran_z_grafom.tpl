@@ -2,7 +2,7 @@
     <head>
         <title>Instagraf</title>
         
-        <link rel="shortcut icon" href="..\database\logo.ico" type="image/x-icon">
+
         <link rel="shortcut icon" href="{{ get_url('database', filename = 'logo.ico') }}" type="image/x-icon">
         <!-- <img src="{{ get_url('database', filename = 'logo.ico') }}" alt="Graph"/>       -->
 
@@ -18,9 +18,9 @@
     %   
     %for graph in graphs:
     %path = str(username) + '/' + graph['filename'].split('.', 1)[0] + '.png'
-    %relative_path = '../graphs_made/' + path
+    %relative_path = '/graphs_made/' + path
     %print(relative_path)
-    <img src="relative_path" alt="Graph"/>   
+    <img src={{relative_path}} alt="Graph"/>   
     %end
 
     </body>

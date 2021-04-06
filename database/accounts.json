@@ -1,3 +1,30 @@
 {
-  "people": []
+  "people": [
+    {
+      "username": "ales",
+      "password": "a",
+      "graphs": [
+        {
+          "filename": "naloga03_abs_beta.txt",
+          "title": "naslov",
+          "x_label": "\u010das",
+          "y_label": "razpad",
+          "fit": "exponential"
+        }
+      ]
+    },
+    {
+      "username": "ALES",
+      "password": "1",
+      "graphs": [
+        {
+          "filename": "naloga03_abs_beta.txt",
+          "title": "Naslov",
+          "x_label": "\u010das",
+          "y_label": "razpadi",
+          "fit": "exponential"
+        }
+      ]
+    }
+  ]
 }

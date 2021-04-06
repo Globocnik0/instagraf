@@ -3,7 +3,7 @@ A web page that makes and stores graphs.
 
 # Usage of Instagraf
 To start program move to root and run web_server.py.
-Required python modules are bottle, os, csv, scipy.optimize, math, pandas, numpy, re and matplotlib.
+Required python modules are bottle, scipy.optimize, pandas, numpy, re and matplotlib.
 
 # Accepted file types
 Only file extensions accepted by Instagraf are .txt, .csv and .xlsx. 

@@ -25,7 +25,7 @@ class User:
         return False
 
     def username_exists(self):
-        with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r") as file:
+        with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r") as file: #get file directory
             logins = json.load(file)
         for login in logins['people']:
             if login['username'] == self.username:
@@ -33,7 +33,7 @@ class User:
         return False
 
     def valid_characters(self):
-        if re.match("^[A-Za-z0-9]*$", self.username) or re.match("^[A-Za-z0-9]*$", self.password):
+        if re.search("^[A-Za-z0-9]*$", self.username) and re.search("^[A-Za-z0-9]*$", self.password):
             return True
         return False 
     

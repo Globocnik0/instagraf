@@ -1,7 +1,7 @@
 import bottle
 import os
 from graph_maker import *
-from graph_maker_class import *
+#from graph_maker_class import *
 from login_manager import *
 
 app = bottle.default_app()
@@ -11,10 +11,10 @@ bottle.BaseTemplate.defaults['get_url'] = app.get_url
 def serve_static(filename):
     return bottle.static_file(filename, root= os.path.join(os.getcwd(),'..', "database"))
 
-# @bottle.route('/graphs_made/Ales/<filename:path>', name='graphs_made/user')
-# def serve_static(filename):
-#     username = bottle.request.get_cookie('Logged')
-#     return bottle.static_file(filename, root= os.path.join(os.getcwd(),'..', "graphs_made", Ales))
+@bottle.route('/graphs_made/ALES/<filename:path>', name='graphs_made/ALES') #daj vse v isto mapo, ni treba name=...
+def serve_static(filename):
+    username = bottle.request.get_cookie('Logged')
+    return bottle.static_file(filename, root= os.path.join(os.getcwd(),'..', "graphs_made", 'ALES'))
 
 # @bottle.route('/graphs_made/<filepath:path>', name='graphs_made')
 # def server_static(filepath):
@@ -96,7 +96,7 @@ def upload_file():
     return bottle.template('naslov.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = 'You missed a field or uploaded an unsupported file type')
 
 
-@bottle.get('/en/graph/') #problem če imajo datoteke isto ime
+@bottle.get('/en/graph/') #problem če imajo datoteke isto ime, treba preusmerit če ni prijavljen-poglej piškotke
 def show_graphs():
     username = bottle.request.get_cookie('Logged')
     graphs = read_graphs_from_account(username = bottle.request.get_cookie('Logged'))
