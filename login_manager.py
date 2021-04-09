@@ -9,7 +9,7 @@ class User:
         self.password = password
 
     def add_account(self): #treba dodati pogoje za dobro geslo in username
-        with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r+") as file:
+        with open(os.path.join(os.getcwd(), "database", "accounts.json"), "r+") as file:
             accounts = json.load(file)
             new_account = {"username": self.username, "password" : self.password, "graphs" : []}
             accounts['people'].append(new_account) 
@@ -17,7 +17,7 @@ class User:
             json.dump(accounts, file, indent = 2)
 
     def correct_password(self):
-        with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r") as file:
+        with open(os.path.join(os.getcwd(), "database", "accounts.json"), "r") as file:
             logins = json.load(file)
         for login in logins['people']:
             if login['username'] == self.username and login['password'] == self.password:
@@ -25,7 +25,7 @@ class User:
         return False
 
     def username_exists(self):
-        with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r") as file: #get file directory
+        with open(os.path.join(os.getcwd(), "database", "accounts.json"), "r") as file: #get file directory
             logins = json.load(file)
         for login in logins['people']:
             if login['username'] == self.username:
@@ -41,7 +41,7 @@ class User:
 
 #dealing with graphs and .json
 def add_graph_to_account(username, filename, title, x_label, y_label, fit):
-    with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r+") as file:
+    with open(os.path.join(os.getcwd(), "database", "accounts.json"), "r+") as file:
         accounts = json.load(file)
         new_graph = {'filename': filename, 'title': title, 'x_label': x_label, 'y_label': y_label, 'fit': fit}
         for user in accounts['people']:
@@ -51,11 +51,8 @@ def add_graph_to_account(username, filename, title, x_label, y_label, fit):
         json.dump(accounts, file, indent = 2)
 
 def read_graphs_from_account(username):
-    with open(os.path.join(os.getcwd(),'..', "database", "accounts.json"), "r") as file:
+    with open(os.path.join(os.getcwd(), "database", "accounts.json"), "r") as file:
         accounts = json.load(file)
         for user in accounts['people']:
             if user['username'] == username:
                 return user['graphs']
-
-
-

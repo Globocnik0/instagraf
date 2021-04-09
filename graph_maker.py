@@ -78,10 +78,10 @@ def make_graph(username, filename, tittle = None, x_label = 'x axis', y_label = 
     ax.grid(linewidth=0.5)
     ax.legend()
 
-    if not os.path.exists(os.path.join(os.getcwd(),'..', "graphs_made", username)):
-        os.makedirs(os.path.join(os.getcwd(),'..', "graphs_made", username))
+    if not os.path.exists(os.path.join(os.getcwd(), "database", "graphs_made", username)):
+        os.makedirs(os.path.join(os.getcwd(), "database", "graphs_made", username))
 
-    plt.savefig(os.path.splitext(os.path.join(os.getcwd(),'..', "graphs_made", username , os.path.basename(filename)))[0])
+    plt.savefig(os.path.splitext(os.path.join(os.getcwd(), "database", "graphs_made", username , os.path.basename(filename)))[0])
 
 
 

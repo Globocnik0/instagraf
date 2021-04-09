@@ -8,18 +8,12 @@ app = bottle.default_app()
 bottle.BaseTemplate.defaults['get_url'] = app.get_url
 
 @bottle.route('/database/<filename:path>', name='database')
-def serve_static(filename):
-    return bottle.static_file(filename, root= os.path.join(os.getcwd(),'..', "database"))
+def serve_static_icon(filename):
+    return bottle.static_file(filename, root= os.path.join(os.getcwd(), "database"))
 
-@bottle.route('/graphs_made/ALES/<filename:path>', name='graphs_made/ALES') #daj vse v isto mapo, ni treba name=...
-def serve_static(filename):
-    username = bottle.request.get_cookie('Logged')
-    return bottle.static_file(filename, root= os.path.join(os.getcwd(),'..', "graphs_made", 'ALES'))
-
-# @bottle.route('/graphs_made/<filepath:path>', name='graphs_made')
-# def server_static(filepath):
-#     username = bottle.request.get_cookie('Logged')
-#     return bottle.static_file(filepath, root=os.path.join(os.getcwd(),'..', "graphs_made"))
+@bottle.route('/graphs_made/<user>/<filename:path>')
+def serve_static_graph(user, filename):
+    return bottle.static_file(filename, root= os.path.join(os.getcwd(),"database", "graphs_made", user))
 
 
 @bottle.get('/en/login/')
@@ -73,7 +67,7 @@ def log_out():
     bottle.redirect('/en/')
 
 
-@bottle.post('/en/upload/')#ni mi treba novega linka
+@bottle.post('/en/upload/') #ni mi treba novega linka
 def upload_file():
     data = bottle.request.files.data 
     tittle = bottle.request.forms['tittle']
@@ -87,7 +81,7 @@ def upload_file():
     filename = data.filename
     add_graph_to_account(username = username, filename = filename, title = tittle, x_label = x_label, y_label = y_label, fit = fit)
     if data and data.file and filename.endswith((".txt", ".csv", ".xlsx", ".XLSX")):
-        with open(os.path.join(os.getcwd(),'..', "uploaded_files", filename), "wb") as file:
+        with open(os.path.join(os.getcwd(),"database", "uploaded_files", filename), "wb") as file:
             global Data
             Data = data.file.read()
             file.write(Data)
@@ -101,12 +95,12 @@ def show_graphs():
     username = bottle.request.get_cookie('Logged')
     graphs = read_graphs_from_account(username = bottle.request.get_cookie('Logged'))
     for graph in graphs:
-        # graph_class = uploaded_data(username = username, filepath = os.path.join(os.getcwd(),'..', "uploaded_files", graph['filename']), title = graph['title'], x_label = graph['x_label'], y_label = graph['y_label'], fit = graph['fit'])
+        # graph_class = uploaded_data(username = username, filepath = os.path.join(os.getcwd(),'database', "uploaded_files", graph['filename']), title = graph['title'], x_label = graph['x_label'], y_label = graph['y_label'], fit = graph['fit'])
         # graph_class.read_file()
         # graph_class.make_fit() #napaka: prevečkrat fitta
         # graph_class.make_and_save_graph()
         
-        make_graph(username = username,filename = os.path.join(os.getcwd(),'..', "uploaded_files", graph['filename']), tittle = graph['title'], x_label = graph['x_label'], y_label = graph['y_label'], fit = graph['fit'])
+        make_graph(username = username,filename = os.path.join(os.getcwd(), "database", "uploaded_files", graph['filename']), tittle = graph['title'], x_label = graph['x_label'], y_label = graph['y_label'], fit = graph['fit'])
 
     return bottle.template('stran_z_grafom.tpl', 
                             base = "Congratulations, your file has been uploaded and a graph was made from it." ,
@@ -114,5 +108,4 @@ def show_graphs():
                             username = username)
 
 bottle.run(debug=True, reloader=True)
-#poženi iz roota
 #pep 8 formatter
