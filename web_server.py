@@ -63,6 +63,7 @@ def zacetek_en():
 
 @bottle.post('/en/')
 def log_out():
+    #delete all temporary graphs in graphs_made
     bottle.response.set_cookie('Logged', '', path='/en/', expires=0)
     bottle.redirect('/en/')
 
@@ -79,6 +80,8 @@ def upload_file():
 
     global filename
     filename = data.filename
+    while os.path.isfile(os.path.join(os.getcwd(),"database", "uploaded_files", os.path.basename(filename))): #preveri če je datoteka z istim imenom že naložena
+        filename =  os.path.splitext(filename)[0] + '(1)' + os.path.splitext(filename)[1]
     add_graph_to_account(username = username, filename = filename, title = tittle, x_label = x_label, y_label = y_label, fit = fit)
     if data and data.file and filename.endswith((".txt", ".csv", ".xlsx", ".XLSX")):
         with open(os.path.join(os.getcwd(),"database", "uploaded_files", filename), "wb") as file:

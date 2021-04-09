@@ -19,7 +19,6 @@
     %for graph in graphs:
     %path = str(username) + '/' + graph['filename'].split('.', 1)[0] + '.png'
     %relative_path = '/graphs_made/' + path
-    %print(relative_path)
     <img src={{relative_path}} alt="Graph"/>   
     %end
 

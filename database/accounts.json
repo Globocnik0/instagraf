@@ -4,6 +4,11 @@
       "username": "ales",
       "password": "a",
       "graphs": []
+    },
+    {
+      "username": "ALES",
+      "password": "1",
+      "graphs": []
     }
   ]
 }
