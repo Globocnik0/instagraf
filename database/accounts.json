@@ -8,7 +8,36 @@
     {
       "username": "ALES",
       "password": "1",
-      "graphs": []
+      "graphs": [
+        {
+          "filename": "naloga03_abs_beta.txt",
+          "title": "1",
+          "x_label": "1",
+          "y_label": "1",
+          "fit": "linear"
+        },
+        {
+          "filename": "naloga03_abs_beta(1).txt",
+          "title": "2",
+          "x_label": "2",
+          "y_label": "2",
+          "fit": "quadratic"
+        },
+        {
+          "filename": "naloga03_abs_beta(1)(1).txt",
+          "title": "3",
+          "x_label": "3",
+          "y_label": "3",
+          "fit": "cubic"
+        },
+        {
+          "filename": "naloga04_abs_gama.txt",
+          "title": "4",
+          "x_label": "4",
+          "y_label": "4",
+          "fit": "linear"
+        }
+      ]
     }
   ]
 }

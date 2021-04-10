@@ -1,5 +1,6 @@
 import bottle
 import os
+import shutil
 from graph_maker import *
 #from graph_maker_class import *
 from login_manager import *
@@ -63,7 +64,9 @@ def zacetek_en():
 
 @bottle.post('/en/')
 def log_out():
-    #delete all temporary graphs in graphs_made
+    username = bottle.request.get_cookie('Logged')
+    if os.path.exists(os.path.join(os.getcwd(), "database", "graphs_made", username)):
+        shutil.rmtree(os.path.join(os.getcwd(), "database", "graphs_made", username)) #delete all temporary graphs in graphs_made
     bottle.response.set_cookie('Logged', '', path='/en/', expires=0)
     bottle.redirect('/en/')
 
