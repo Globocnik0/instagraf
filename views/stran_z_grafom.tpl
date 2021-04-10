@@ -17,9 +17,11 @@
     %
     %   
     %for graph in graphs:
-    %path = str(username) + '/' + graph['filename'].split('.', 1)[0] + '.png'
-    %relative_path = '/graphs_made/' + path
-    <img src={{relative_path}} alt="Graph"/>   
+    %filename = graph['filename'].split('.', 1)[0]
+    %path_to_image = '/graphs_made/' + str(username) + '/' + filename + '.png'
+    <a class="credit" href={{path_to_image}} download={{filename}}>
+        <img src={{path_to_image}} alt="Graph"/>   
+    </a>
     %end
 
     </body>
