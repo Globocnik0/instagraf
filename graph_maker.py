@@ -26,14 +26,14 @@ def make_graph(username, filename, tittle = None, x_label = 'x axis', y_label = 
                 x_values.append(int(float(row[0])))
                 y_values.append(int(float(row[1])))
 
-    if filename.endswith((".csv")):
+    elif filename.endswith((".csv")):
         with open(filename,'r') as f:
             reader = csv.reader(f,delimiter=',')
             for row in reader:
                 x_values.append(int(float(row[0])))
                 y_values.append(int(float(row[1]))) 
 
-    if filename.endswith((".xlsx")) or filename.endswith((".XLSX")):
+    elif filename.endswith((".xlsx")) or filename.endswith((".XLSX")):
         df = pd.read_excel(filename, header = None)
         x_values = df[0].tolist()
         y_values = df[1].tolist()
@@ -49,25 +49,33 @@ def make_graph(username, filename, tittle = None, x_label = 'x axis', y_label = 
 
     if fit == 'linear':
         param = np.polyfit(x_values, y_values, 1)
-        ax.plot(x, np.poly1d(param)(x), label=r"$linear fit$", color="green", linewidth="1")
+        fitf = np.poly1d(param)
+        fit_label = r"$linear fit$"
 
-    if fit == 'quadratic':
+    elif fit == 'quadratic':
         param = np.polyfit(x_values, y_values, 2)
-        ax.plot(x, np.poly1d(param)(x), label=r"$quadratic fit$", color="green", linewidth="1")
+        fitf = np.poly1d(param)
+        fit_label = r"$quadratic fit$"
 
-    if fit == 'cubic':
+    elif fit == 'cubic':
         param = np.polyfit(x_values, y_values, 3)
-        ax.plot(x, np.poly1d(param)(x), label=r"$cubic fit$", color="green", linewidth="1")
+        fitf = np.poly1d(param)
+        fit_label = r"$cubic fit$"
 
-    if fit == 'exponential':
+    elif fit == 'exponential':
         param, cov = curve_fit(exponential_fit, x_values, y_values) 
-        ax.plot(x, exponential_fit(x, param[0], param[1], param[2]) , label=r"exponential fit", color="green", linewidth="1")    
+        fitf = lambda x: exponential_fit(x, param[0], param[1], param[2])
+        fit_label = r"exponential fit"  
 
-    if fit == 'logarithmic':
+    elif fit == 'logarithmic':
         param, cov = curve_fit(logarithmic_fit, x_values, y_values) 
-        ax.plot(x, exponential_fit(x, param[0], param[1], param[2]) , label=r"logarithmic fit", color="green", linewidth="1")    
+        fitf = lambda x: logarithmic_fit(x, param[0], param[1], param[2])
+        fit_label = r"logarithmic fit" 
     
-
+    if not fit == 'None': 
+        print('plotting fit') 
+        ax.plot(x, fitf(x), label=fit_label, color="green", linewidth="1") #plot fit function
+        
     ax.scatter(x_values, y_values, s=20, label="Data", color="red")
     ax.set_ylabel(y_label)
     ax.set_xlabel(x_label) 
@@ -91,7 +99,6 @@ print(cov)
 print(np.sqrt(np.diag(cov)))
 """
 #shranit graf
-#imet shranjeno samo .txt
 
 
       

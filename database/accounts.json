@@ -8,22 +8,7 @@
     {
       "username": "ALES",
       "password": "1",
-      "graphs": [
-        {
-          "filename": "naloga01_predali.txt",
-          "title": "1",
-          "x_label": "1",
-          "y_label": "1",
-          "fit": "linear"
-        },
-        {
-          "filename": "naloga01_predali(1).txt",
-          "title": "",
-          "x_label": "",
-          "y_label": "",
-          "fit": "quadratic"
-        }
-      ]
+      "graphs": []
     }
   ]
 }
