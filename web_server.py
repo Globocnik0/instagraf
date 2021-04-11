@@ -50,13 +50,13 @@ def redirect():
 
 @bottle.get('/sl/') #tukaj bi lahko naredil še slovensko različico
 def zacetek_sl():
-    return bottle.template('naslov.tpl', base='Pozdravljen na strani, kjer se ustvarjanje grafov začne.')
+    return bottle.template('new_upload.tpl', base='Pozdravljen na strani, kjer se ustvarjanje grafov začne.')
 
 @bottle.get('/en/')
 def zacetek_en():
     if bottle.request.get_cookie('Logged'):
         if User(bottle.request.get_cookie('Logged')).username_exists():
-            return bottle.template('naslov.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = '')
+            return bottle.template('new_upload.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = '')
         else:
             return bottle.template('login.tpl', alert = 'Nice try. Police is heading your way!')
     else:
@@ -90,7 +90,7 @@ def upload_file():
     ext = os.path.splitext(filename)[1]
     if not (ext == '.txt' or ext == '.csv' or ext == '.xlsx' or ext == '.XLSX'):
         print(os.path.splitext(filename)[1])
-        return bottle.template('naslov.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = 'Your uploaded file has wrong format')
+        return bottle.template('new_upload.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = 'Your uploaded file has wrong format')
 
     while os.path.isfile(os.path.join(os.getcwd(),"database", "uploaded_files", os.path.basename(filename))): #preveri če je datoteka z istim imenom že naložena
         filename =  os.path.splitext(filename)[0] + '(1)' + os.path.splitext(filename)[1]
@@ -102,7 +102,7 @@ def upload_file():
             file.write(Data)
 
         bottle.redirect('/en/graph/')
-    return bottle.template('naslov.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = 'You missed a field or uploaded an unsupported file type')
+    return bottle.template('new_upload.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = 'You missed a field or uploaded an unsupported file type')
 
 
 @bottle.get('/en/graph/') #problem če imajo datoteke isto ime, treba preusmerit če ni prijavljen-poglej piškotke
@@ -117,7 +117,7 @@ def show_graphs():
         
         make_graph(username = username,filename = os.path.join(os.getcwd(), "database", "uploaded_files", graph['filename']), tittle = graph['title'], x_label = graph['x_label'], y_label = graph['y_label'], fit = graph['fit'])
 
-    return bottle.template('stran_z_grafom.tpl', 
+    return bottle.template('all_graphs.tpl', 
                             base = "Congratulations, your file has been uploaded and a graph was made from it." ,
                             graphs = graphs,
                             username = username)
