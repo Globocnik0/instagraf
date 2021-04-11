@@ -35,13 +35,13 @@ Data should be written in first two columns without any headers in the first row
 * web_server.py is built with the help of [Bottle documentation](https://bottlepy.org/docs/dev/)
 * website design is made with [Bootstrap](https://getbootstrap.com/)
 * source of Instagraph's icon was [this website](https://www.obfuscata.com/how-to-make-a-line-graph-7899.html) 
-A grave help was also doc. dr. Matija Pretnar Bottle course at FMF and people citing Bottle documentation on Stack Overflow.
+* A grave help was also doc. dr. Matija Pretnar Bottle course at FMF and people citing Bottle documentation on Stack Overflow.
 
 # Possible future extensions
-Display fit parameters
-User can set colors and sytles of lines or points
-Different types of graphs
-User can add functions to the graphs
+* Display fit parameters
+* User can set colors and sytles of lines or points
+* Different types of graphs
+* User can add functions to the graphs
 
 
 Project at elective class Računalništvo, 2. letnik, FMF UL.

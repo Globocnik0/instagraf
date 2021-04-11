@@ -16,7 +16,6 @@
     </head>
     <body>
         <div class="container">
-        <h3 style="color:rgb(255, 38, 0);">{{!alert}} </h3>
         <h1>{{!base}}</h1><br>
 
         <div>
@@ -25,16 +24,19 @@
         </form> <br><br>
         </div>
         
+        <h3 style="color:rgb(255, 38, 0);">{{!alert}} </h3>
+
         <h2>
         <form action="/en/upload/" method="post" enctype="multipart/form-data">
             
             <div>
-            <input type="file" name="data" class="form-control form-control-lg"/> <br><br>
+            <label for="file">You can upload .txt, .csv or .xlsx file here. Make sure data is written in the first two columns, without headers in the first row.</label>
+            <input type="file" name="data" class="form-control form-control-lg" required/> <br><br>
             </div>
 
             <div class="col-sm-2">
-            <label for="tittle">Tittle</label>
-            <input type="text" id="tittle" name="tittle" class="form-control"><br>
+            <label for="title">Tittle</label>
+            <input type="text" id="title" name="title" class="form-control"><br>
         
             <label for="x label">x label</label>
             <input type="text" id="x_label" name="x_label" class="form-control"><br>

@@ -74,15 +74,22 @@ def log_out():
 @bottle.post('/en/upload/') #ni mi treba novega linka
 def upload_file():
     data = bottle.request.files.data 
-    tittle = bottle.request.forms['tittle']
+    tittle = bottle.request.forms['title']
     x_label = bottle.request.forms['x_label']
     y_label = bottle.request.forms['y_label'] #šumniki delajo
     fit = bottle.request.forms.fit
 
     username = bottle.request.get_cookie('Logged')
 
-    global filename
-    filename = data.filename
+    try: 
+        global filename
+        filename = data.filename
+    except:
+        return 'Please upload a file' #se ne prikaže ker je sedaj datoteka required
+
+    if not os.path.splitext(filename)[1] == '.txt' or '.csv' or '.xlsx' or '.XLSX':
+        return bottle.template('naslov.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = 'Your uploaded file has wrong format')
+
     while os.path.isfile(os.path.join(os.getcwd(),"database", "uploaded_files", os.path.basename(filename))): #preveri če je datoteka z istim imenom že naložena
         filename =  os.path.splitext(filename)[0] + '(1)' + os.path.splitext(filename)[1]
     add_graph_to_account(username = username, filename = filename, title = tittle, x_label = x_label, y_label = y_label, fit = fit)
