@@ -78,7 +78,6 @@ def upload_file():
     x_label = bottle.request.forms['x_label']
     y_label = bottle.request.forms['y_label'] #šumniki delajo
     fit = bottle.request.forms.fit
-    print(fit)
 
     username = bottle.request.get_cookie('Logged')
 
@@ -89,7 +88,7 @@ def upload_file():
         return 'Please upload a file' #se ne prikaže ker je sedaj datoteka required
 
     ext = os.path.splitext(filename)[1]
-    if not ext == '.txt' or ext == '.csv' or ext == '.xlsx' or ext == '.XLSX':
+    if not (ext == '.txt' or ext == '.csv' or ext == '.xlsx' or ext == '.XLSX'):
         print(os.path.splitext(filename)[1])
         return bottle.template('naslov.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = 'Your uploaded file has wrong format')
 

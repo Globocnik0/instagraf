@@ -19,19 +19,23 @@ def make_graph(username, filename, tittle = None, x_label = 'x axis', y_label = 
     x_values = []
     y_values = []
 
+
+    # if filename.endswith((".csv")):
+    #     with open(filename,'r') as f:
+    #         reader = csv.reader(f,delimiter=',')
+    #         for row in reader:
+    #             x_values.append(int(float(row[0])))
+    #             y_values.append(int(float(row[1]))) 
+
     if filename.endswith((".txt")):
-        with open(filename,'r') as f:
-            reader = csv.reader(f,delimiter='\t')
-            for row in reader:
-                x_values.append(int(float(row[0])))
-                y_values.append(int(float(row[1])))
+        df = pd.read_csv(filename, header = None, delimiter='\t')
+        x_values = df[0].tolist()
+        y_values = df[1].tolist()
 
     elif filename.endswith((".csv")):
-        with open(filename,'r') as f:
-            reader = csv.reader(f,delimiter=',')
-            for row in reader:
-                x_values.append(int(float(row[0])))
-                y_values.append(int(float(row[1]))) 
+        df = pd.read_csv(filename, header = None, delimiter=';') #Delimiter je lahko tudi ','
+        x_values = df[0].tolist()
+        y_values = df[1].tolist()
 
     elif filename.endswith((".xlsx")) or filename.endswith((".XLSX")):
         df = pd.read_excel(filename, header = None)
@@ -73,7 +77,6 @@ def make_graph(username, filename, tittle = None, x_label = 'x axis', y_label = 
         fit_label = r"logarithmic fit" 
     
     if not fit == 'None': 
-        print('plotting fit') 
         ax.plot(x, fitf(x), label=fit_label, color="green", linewidth="1") #plot fit function
         
     ax.scatter(x_values, y_values, s=20, label="Data", color="red")
