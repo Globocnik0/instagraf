@@ -92,7 +92,7 @@ def upload_file():
         print(os.path.splitext(filename)[1])
         return bottle.template('new_upload.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = 'Your uploaded file has wrong format')
 
-    while os.path.isfile(os.path.join(os.getcwd(),"database", "uploaded_files", os.path.basename(filename))): #preveri če je datoteka z istim imenom že naložena
+    while os.path.isfile(os.path.join(os.getcwd(),"database", "uploaded_files", os.path.basename(filename))): #preveri če je datoteka z istim imenom že naložena, problem je če nekdo naloži npr. filename.csv in filename.txt
         filename =  os.path.splitext(filename)[0] + '(1)' + os.path.splitext(filename)[1]
     add_graph_to_account(username = username, filename = filename, title = tittle, x_label = x_label, y_label = y_label, fit = fit)
     if data and data.file and filename.endswith((".txt", ".csv", ".xlsx", ".XLSX")):
@@ -105,7 +105,7 @@ def upload_file():
     return bottle.template('new_upload.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = 'You missed a field or uploaded an unsupported file type')
 
 
-@bottle.get('/en/graph/') #problem če imajo datoteke isto ime, treba preusmerit če ni prijavljen-poglej piškotke
+@bottle.get('/en/graph/')
 def show_graphs():
     username = bottle.request.get_cookie('Logged')
     graphs = read_graphs_from_account(username = bottle.request.get_cookie('Logged'))
