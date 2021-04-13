@@ -49,7 +49,7 @@
         <form action="/en/upload/" method="post" enctype="multipart/form-data">
             
             <div class="col-sm-9">
-                <label for="file">You can upload .txt, .csv or .xlsx file here. Make sure data is written in the first two columns, with no headers in the first row.</label> <br><br>
+                <label for="data">You can upload .txt, .csv or .xlsx file here. Make sure data is written in the first two columns, with no headers in the first row.</label> <br><br>
                 <input type="file" name="data" class="form-control form-control-lg" aria-label="file example" required/> <br>
             </div>
             
