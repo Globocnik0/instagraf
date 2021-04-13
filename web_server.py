@@ -104,8 +104,19 @@ def upload_file():
         bottle.redirect('/en/graph/')
     return bottle.template('new_upload.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert = 'You missed a field or uploaded an unsupported file type')
 
-
 @bottle.get('/en/graph/')
+def show_graph():
+    username = bottle.request.get_cookie('Logged')
+    graphs = read_graphs_from_account(username = bottle.request.get_cookie('Logged'))   
+    new_graph = graphs[-1]  
+    make_graph(username = username,filename = os.path.join(os.getcwd(), "database", "uploaded_files", new_graph['filename']), tittle = new_graph['title'], x_label = new_graph['x_label'], y_label = new_graph['y_label'], fit = new_graph['fit'])
+
+    return bottle.template('one_graph.tpl',
+                            graph = new_graph,
+                            username = username)
+
+
+@bottle.get('/en/graphs/')
 def show_graphs():
     username = bottle.request.get_cookie('Logged')
     graphs = read_graphs_from_account(username = bottle.request.get_cookie('Logged'))
@@ -117,8 +128,7 @@ def show_graphs():
         
         make_graph(username = username,filename = os.path.join(os.getcwd(), "database", "uploaded_files", graph['filename']), tittle = graph['title'], x_label = graph['x_label'], y_label = graph['y_label'], fit = graph['fit'])
 
-    return bottle.template('all_graphs.tpl', 
-                            base = "Congratulations, your file has been uploaded and a graph was made from it." ,
+    return bottle.template('all_graphs.tpl',
                             graphs = graphs,
                             username = username)
 

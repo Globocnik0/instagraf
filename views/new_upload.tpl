@@ -26,7 +26,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/en/graph/">My graphs</a>
+                <a class="nav-link" href="/en/graphs/">My graphs</a>
             </li>
             </ul>
 

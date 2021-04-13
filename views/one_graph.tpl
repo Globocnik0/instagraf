@@ -25,7 +25,7 @@
                 </li>
     
                 <li class="nav-item">
-                    <a class="nav-link" href="/en/graphs/">My graphs <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/en/graphs/">My graphs</a>
                 </li>
                 </ul>
     
@@ -40,12 +40,11 @@
 
 
         <div class="container">
-        <h1 style="color:rgb(59, 182, 110);"> Here are all your graphs! You can download them by clicking on it.</h1>
+        <h1 style="color:rgb(59, 182, 110);">Congratulations, your file has been uploaded and a graph was made from it. Click on it to download.</h1>
 
 
 
 
-            %for graph in graphs:
             %filename = graph['filename'].split('.', 1)[0]
             %path_to_image = '/graphs_made/' + str(username) + '/' + filename + '.png'
             <a class="credit" href={{path_to_image}} download={{filename}}>
