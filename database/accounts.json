@@ -3,7 +3,29 @@
     {
       "username": "ales",
       "password": "a",
-      "graphs": []
+      "graphs": [
+        {
+          "filename": "example_data1.csv",
+          "title": "csv file",
+          "x_label": "time",
+          "y_label": "meters",
+          "fit": "linear"
+        },
+        {
+          "filename": "example_data2.xlsx",
+          "title": "xlsx file",
+          "x_label": "time",
+          "y_label": "meters",
+          "fit": "logarithmic"
+        },
+        {
+          "filename": "example_data3.txt",
+          "title": "txt file",
+          "x_label": "time",
+          "y_label": "meters",
+          "fit": "cubic"
+        }
+      ]
     },
     {
       "username": "ALES",

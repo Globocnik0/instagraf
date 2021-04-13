@@ -22,11 +22,11 @@ Older python releases may not work properly.
 
 # Accepted file types
 
-Only file extensions accepted by Instagraf are .txt, .csv and .xlsx. 
+Only file extensions accepted by Instagraf are .txt, .xlsx and .csv (with ; as separator) . 
 
 Data should be written in first two columns without any headers in the first row.
 
-Examples of upload files can be seen in the example_upload_files folder.
+Examples of upload files can be seen in the database/uploaded_files folder. They belong to user "ales" as it can be seen in database/accounts.json.
 
 
 # Sources
