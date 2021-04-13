@@ -26,11 +26,11 @@ Older python releases may not work properly.
 
 User can choose to fit functions to uploaded data. Current available functions are:
 
-*Linear fit
-*Quadratic fit
-*Cubic fit
-*Exponential fit
-*Logarithmic fit
+* Linear fit
+* Quadratic fit
+* Cubic fit
+* Exponential fit
+* Logarithmic fit
 
 # Accepted file types
 
