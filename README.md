@@ -53,6 +53,7 @@ Examples of upload files can be seen in the database/uploaded_files folder. They
 * User can set colors and sytles of lines or points
 * Different types of graphs
 * User can add functions to the graphs or manually edit data
+* Checking whether graph is already made and not remaking it for a faster web page
 
 
 Project at elective class Računalništvo, 2. letnik, FMF UL.
