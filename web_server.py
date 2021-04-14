@@ -10,12 +10,14 @@ bottle.BaseTemplate.defaults['get_url'] = app.get_url
 
 @bottle.route('/database/<filename:path>', name='database')
 def serve_static_icon(filename):
-    return bottle.static_file(filename, root=os.path.join(os.getcwd(), "database"))
+    return bottle.static_file(
+        filename, root=os.path.join(os.getcwd(), "database"))
 
 
 @bottle.route('/graphs_made/<user>/<filename:path>')
 def serve_static_graph(user, filename):
-    return bottle.static_file(filename, root=os.path.join(os.getcwd(), "database", "graphs_made", user))
+    return bottle.static_file(filename, root=os.path.join(
+        os.getcwd(), "database", "graphs_made", user))
 
 
 @bottle.get('/en/login/')
@@ -33,18 +35,24 @@ def login_post():
     if first_time_user == 'on':
         if User(username, password).valid_characters():
             if User(username, password).username_exists():
-                return bottle.template('login.tpl', alert='This username is already taken. Please choose another one.')
+                return bottle.template(
+                    'login.tpl',
+                    alert='This username is already taken. Please choose another one.')
             else:
                 User(username, password).add_account()
-                return bottle.template('login.tpl', alert='You have registered successfully. Now you can sign in.')
+                return bottle.template(
+                    'login.tpl', alert='You have registered successfully. Now you can sign in.')
         else:
-            return bottle.template('login.tpl', alert='Only permitted characters are A-Z, a-z, 0-9.')
+            return bottle.template(
+                'login.tpl',
+                alert='Only permitted characters are A-Z, a-z, 0-9.')
     else:
         if User(username, password).correct_password():
             bottle.response.set_cookie('Logged', username, path='/en/')
             bottle.redirect('/en/')
         else:
-            return bottle.template('login.tpl', alert='wrong password or not registered')
+            return bottle.template(
+                'login.tpl', alert='wrong password or not registered')
     return bottle.template('login.tpl', alert='')
 
 
@@ -55,16 +63,23 @@ def redirect():
 
 @bottle.get('/sl/')  # tukaj bi lahko naredil še slovensko različico
 def zacetek_sl():
-    return bottle.template('new_upload.tpl', base='Pozdravljen na strani, kjer se ustvarjanje grafov začne.')
+    return bottle.template(
+        'new_upload.tpl',
+        base='Pozdravljen na strani, kjer se ustvarjanje grafov začne.')
 
 
 @bottle.get('/en/')
 def zacetek_en():
     if bottle.request.get_cookie('Logged'):
         if User(bottle.request.get_cookie('Logged')).username_exists():
-            return bottle.template('new_upload.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert='')
+            return bottle.template(
+                'new_upload.tpl',
+                base='Welcome %s to the page where the making of graphs begins.' %
+                bottle.request.get_cookie('Logged'),
+                alert='')
         else:
-            return bottle.template('login.tpl', alert='Nice try. Police is heading your way!')
+            return bottle.template(
+                'login.tpl', alert='Nice try. Police is heading your way!')
     else:
         bottle.redirect('/en/login/')
 
@@ -72,7 +87,8 @@ def zacetek_en():
 @bottle.post('/en/')
 def log_out():
     username = bottle.request.get_cookie('Logged')
-    if os.path.exists(os.path.join(os.getcwd(), "database", "graphs_made", username)):
+    if os.path.exists(os.path.join(
+            os.getcwd(), "database", "graphs_made", username)):
         # delete all temporary graphs in graphs_made
         shutil.rmtree(os.path.join(
             os.getcwd(), "database", "graphs_made", username))
@@ -93,27 +109,48 @@ def upload_file():
     try:
         global filename
         filename = data.filename
-    except:
+    except BaseException:
         return 'Please upload a file'  # se ne prikaže ker je sedaj datoteka required
 
     ext = os.path.splitext(filename)[1]
-    if not (ext == '.txt' or ext == '.csv' or ext == '.xlsx' or ext == '.XLSX'):
-        return bottle.template('new_upload.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert='Your uploaded file has wrong format')
+    if not (ext == '.txt' or ext == '.csv' or ext ==
+            '.xlsx' or ext == '.XLSX'):
+        return bottle.template(
+            'new_upload.tpl',
+            base='Welcome %s to the page where the making of graphs begins.' %
+            bottle.request.get_cookie('Logged'),
+            alert='Your uploaded file has wrong format')
 
-    # preveri če je datoteka z istim imenom že naložena, problem je če nekdo naloži npr. filename.csv in filename.txt
-    while os.path.isfile(os.path.join(os.getcwd(), "database", "uploaded_files", os.path.basename(filename))):
+    # preveri če je datoteka z istim imenom že naložena, problem je če nekdo
+    # naloži npr. filename.csv in filename.txt
+    while os.path.isfile(
+        os.path.join(
+            os.getcwd(),
+            "database",
+            "uploaded_files",
+            os.path.basename(filename))):
         filename = os.path.splitext(
             filename)[0] + '(1)' + os.path.splitext(filename)[1]
-    add_graph_to_account(username=username, filename=filename,
-                         title=title, x_label=x_label, y_label=y_label, fit=fit)
-    if data and data.file and filename.endswith((".txt", ".csv", ".xlsx", ".XLSX")):
+    add_graph_to_account(
+        username=username,
+        filename=filename,
+        title=title,
+        x_label=x_label,
+        y_label=y_label,
+        fit=fit)
+    if data and data.file and filename.endswith(
+            (".txt", ".csv", ".xlsx", ".XLSX")):
         with open(os.path.join(os.getcwd(), "database", "uploaded_files", filename), "wb") as file:
             global Data
             Data = data.file.read()
             file.write(Data)
 
         bottle.redirect('/en/graph/')
-    return bottle.template('new_upload.tpl', base='Welcome %s to the page where the making of graphs begins.' % bottle.request.get_cookie('Logged'), alert='You missed a field or uploaded an unsupported file type')
+    return bottle.template(
+        'new_upload.tpl',
+        base='Welcome %s to the page where the making of graphs begins.' %
+        bottle.request.get_cookie('Logged'),
+        alert='You missed a field or uploaded an unsupported file type')
 
 
 @bottle.get('/en/graph/')
@@ -122,8 +159,17 @@ def show_graph():
     graphs = read_graphs_from_account(
         username=bottle.request.get_cookie('Logged'))
     new_graph = graphs[-1]
-    make_graph(username=username, filename=os.path.join(os.getcwd(), "database", "uploaded_files",
-               new_graph['filename']), title=new_graph['title'], x_label=new_graph['x_label'], y_label=new_graph['y_label'], fit=new_graph['fit'])
+    make_graph(
+        username=username,
+        filename=os.path.join(
+            os.getcwd(),
+            "database",
+            "uploaded_files",
+            new_graph['filename']),
+        title=new_graph['title'],
+        x_label=new_graph['x_label'],
+        y_label=new_graph['y_label'],
+        fit=new_graph['fit'])
 
     return bottle.template('one_graph.tpl',
                            graph=new_graph,
@@ -136,8 +182,17 @@ def show_graphs():
     graphs = read_graphs_from_account(
         username=bottle.request.get_cookie('Logged'))
     for graph in graphs:
-        make_graph(username=username, filename=os.path.join(os.getcwd(), "database", "uploaded_files",
-                   graph['filename']), title=graph['title'], x_label=graph['x_label'], y_label=graph['y_label'], fit=graph['fit'])
+        make_graph(
+            username=username,
+            filename=os.path.join(
+                os.getcwd(),
+                "database",
+                "uploaded_files",
+                graph['filename']),
+            title=graph['title'],
+            x_label=graph['x_label'],
+            y_label=graph['y_label'],
+            fit=graph['fit'])
 
     return bottle.template('all_graphs.tpl',
                            graphs=graphs,

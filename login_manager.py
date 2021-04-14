@@ -36,7 +36,10 @@ class User:
 
     def valid_characters(self):
         if re.search(
-                "^[A-Za-z0-9]*$", self.username) and re.search("^[A-Za-z0-9]*$", self.password):
+                "^[A-Za-z0-9]*$",
+                self.username) and re.search(
+                "^[A-Za-z0-9]*$",
+                self.password):
             return True
         return False
 

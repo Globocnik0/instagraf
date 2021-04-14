@@ -30,7 +30,6 @@ def read_file(filename):
 
 
 def fit_function(fit, x_values, y_values):
-    x = np.linspace(np.amin(x_values), np.amax(x_values), 500)
 
     if fit == 'linear':
         param = np.polyfit(x_values, y_values, 1)
