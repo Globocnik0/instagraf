@@ -34,7 +34,7 @@ User can choose to fit functions to uploaded data. Current available functions a
 
 # Accepted file types
 
-Instagraf can accept multiple file extensions as .txt, .xlsx and .csv (with ; as separator). 
+Instagraf can accept multiple file extensions as .xlsx, .txt (with tab as separator) and .csv (with , as separator). 
 
 Data should be written in first two columns without any headers in the first row.
 

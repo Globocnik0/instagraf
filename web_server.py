@@ -21,7 +21,7 @@ def serve_static_graph(user, filename):
 @bottle.get('/en/login/')
 def login_get():
     if bottle.request.get_cookie('Logged'):
-        return "You are logged in"  # naredi spletno stran ali message
+        bottle.redirect('/en/')
     return bottle.template('login.tpl', alert='')
 
 
@@ -33,10 +33,10 @@ def login_post():
     if first_time_user == 'on':
         if User(username, password).valid_characters():
             if User(username, password).username_exists():
-                # mogoče bi mogel redirectat na .get/en/login/
-                return bottle.template('login.tpl', alert='This username is already taken. Please choose another one')
+                return bottle.template('login.tpl', alert='This username is already taken. Please choose another one.')
             else:
                 User(username, password).add_account()
+                return bottle.template('login.tpl', alert='You have registered successfully. Now you can sign in.')
         else:
             return bottle.template('login.tpl', alert='Only permitted characters are A-Z, a-z, 0-9.')
     else:
