@@ -1,6 +1,8 @@
 %rebase("base.tpl")
 
-        <h1 style="color:rgb(59, 182, 110);"> Here are all your graphs! You can download them by clicking on it.</h1>
+        <h1 style="color:rgb(59, 182, 110);"> 
+            Here are all your graphs! You can download them by clicking on it.
+        </h1>
 
             %for graph in graphs:
             %filename = graph['filename'].split('.', 1)[0]
