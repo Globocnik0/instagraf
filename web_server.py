@@ -106,11 +106,8 @@ def upload_file():
 
     username = bottle.request.get_cookie('Logged')
 
-    try:
-        global filename
-        filename = data.filename
-    except BaseException:
-        return 'Please upload a file'  # se ne prikaže ker je sedaj datoteka required
+
+    filename = data.filename
 
     ext = os.path.splitext(filename)[1]
     if not (ext == '.txt' or ext == '.csv' or ext ==
@@ -138,8 +135,7 @@ def upload_file():
         x_label=x_label,
         y_label=y_label,
         fit=fit)
-    if data and data.file and filename.endswith(
-            (".txt", ".csv", ".xlsx", ".XLSX")):
+    if data and data.file:
         with open(os.path.join(os.getcwd(), "database", "uploaded_files", filename), "wb") as file:
             global Data
             Data = data.file.read()
